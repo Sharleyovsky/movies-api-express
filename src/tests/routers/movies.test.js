@@ -42,3 +42,17 @@ const testMovies = [
 afterAll(() => {
   server.close();
 });
+
+describe("Test movies router endpoints", () => {
+  test("Should add movie to the database", async () => {
+    const response = await request(app).post("/movies/add").send(testMovies[0]);
+    const movie = response.body.movie;
+
+    await expect(response.statusCode).toBe(201);
+    await expect(movie).toEqual({
+      ...testMovies[0],
+      id: (await getAllMovies()).length,
+    });
+    await removeMovie(movie.title);
+  });
+});
