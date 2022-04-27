@@ -27,6 +27,20 @@ describe("Test movies router endpoints", () => {
     await expect(+response.body[0].runtime).toBeLessThanOrEqual(100);
   });
 
+  test("Should respond with code 200 and right genres", async () => {
+    const response = await request(app).get(
+      `${prefix}?genres[]=Drama&genres[]=Comedy`
+    );
+    await expect(response.statusCode).toBe(200);
+
+    const genres = ["Drama", "Comedy"];
+    for (const movie of response.body) {
+      await expect(genres.some((genre) => movie.genres.includes(genre))).toBe(
+        true
+      );
+    }
+  });
+
   test("Should respond with code 201 and add movie to the database", async () => {
     const response = await request(app)
       .post(`${prefix}/add`)
@@ -43,10 +57,10 @@ describe("Test movies router endpoints", () => {
   test("Should respond with code 400 and duplicate error message", async () => {
     const response = await request(app)
       .post(`${prefix}/add`)
-      .send(testMovies[2]);
+      .send(testMovies[0]);
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(
-      `Error: Movie ${testMovies[2].title} already exists in the database`
+      `Error: Movie ${testMovies[0].title} already exists in the database`
     );
   });
 
