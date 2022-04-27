@@ -101,7 +101,13 @@ afterAll(async () => {
 });
 
 describe("Test movies router endpoints", () => {
-  test("Should add movie to the database", async () => {
+  test("Should respond with code 200 and random movie", async () => {
+    const response = await request(app).get("/movies");
+    await expect(response.statusCode).toBe(200);
+    await expect(response.body.length).toBe(1);
+  });
+
+  test("Should respond with code 201 and add movie to the database", async () => {
     const response = await request(app).post("/movies/add").send(testMovies[0]);
     const movie = response.body.movie;
 
