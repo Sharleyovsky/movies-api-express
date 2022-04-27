@@ -31,7 +31,7 @@ const getMovies = async (queries = null) => {
       movies = filterMoviesByGenres(movies, queries.genres);
     }
 
-    return lodash.uniq(movies);
+    return movies;
   } catch (error) {
     return error;
   }
