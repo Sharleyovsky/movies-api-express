@@ -41,6 +41,23 @@ describe("Test movies router endpoints", () => {
     }
   });
 
+  test("Should respond with code 200, right duration and right genres", async () => {
+    const duration = 90;
+    const response = await request(app).get(
+      `${prefix}?duration=${duration}&genres[]=Drama&genres[]=Comedy`
+    );
+    await expect(response.statusCode).toBe(200);
+
+    const genres = ["Drama", "Comedy"];
+    for (const movie of response.body) {
+      await expect(+movie.runtime).toBeGreaterThanOrEqual(80);
+      await expect(+movie.runtime).toBeLessThanOrEqual(100);
+      await expect(genres.some((genre) => movie.genres.includes(genre))).toBe(
+        true
+      );
+    }
+  });
+
   test("Should respond with code 201 and add movie to the database", async () => {
     const response = await request(app)
       .post(`${prefix}/add`)
