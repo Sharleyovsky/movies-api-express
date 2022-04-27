@@ -5,9 +5,9 @@ const removeMovie = require("../../utils/removeMovie");
 
 const testMovies = [
   {
-    title: "A Separation",
-    year: 2011,
-    runtime: 123,
+    title: "A Separation 2",
+    year: 2013,
+    runtime: 125,
     genres: ["Drama", "Mystery"],
     director: "Asghar Farhadi",
     actors: "Peyman Moaadi, Leila Hatami, Sareh Bayat, Shahab Hosseini",
@@ -16,9 +16,9 @@ const testMovies = [
       "http://ia.media-imdb.com/images/M/MV5BMTYzMzU4NDUwOF5BMl5BanBnXkFtZTcwMTM5MjA5Ng@@._V1_SX300.jpg",
   },
   {
-    title: "The Big Short",
-    year: 2015,
-    runtime: 130,
+    title: "The Big Short 2",
+    year: 2017,
+    runtime: 136,
     genres: ["Biography", "Comedy", "Drama"],
     director: "Adam McKay",
     actors: "Ryan Gosling, Rudy Eisenzopf, Casey Groves, Charlie Talbert",
@@ -38,7 +38,7 @@ const testMovies = [
       "https://images-na.ssl-images-amazon.com/images/M/MV5BMTUwODE3MDE0MV5BMl5BanBnXkFtZTgwNTk1MjI4MzE@._V1_SX300.jpg",
   },
   {
-    title: "The Hateful Eight",
+    title: "The Hateful Eight 2",
     year: "2015",
     runtime: 187,
     genres: ["Crime", "Drama", "Mystery"],
