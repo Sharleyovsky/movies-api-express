@@ -8,7 +8,7 @@ const prefix = "/movies";
 
 moviesRouter.get(prefix, async (req, res) => {
   try {
-    const movies = await getMovies(req.body);
+    const movies = await getMovies(req.query);
     res.send(movies);
   } catch (error) {
     res.status(400).send(error);
