@@ -3,7 +3,7 @@ const getRandomNumber = require("./getRandomNumber");
 const getRandomMovie = (movies) => {
   const randomNumber = getRandomNumber(0, movies.length - 1);
 
-  return movies[randomNumber];
+  return [movies[randomNumber]];
 };
 
 module.exports = getRandomMovie;
