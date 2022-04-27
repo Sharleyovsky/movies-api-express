@@ -16,7 +16,7 @@ const movie = async (req, res, next) => {
       "plot",
       "posterUrl",
     ];
-    const requiredKeys = movieKeys.slice(0, 5);
+    const requiredKeys = allowedMovieKeys.slice(0, 5);
     const allowedGenres = await getGenres();
     const movies = await getAllMovies();
     const CHARACTERS_LIMIT = 255;
