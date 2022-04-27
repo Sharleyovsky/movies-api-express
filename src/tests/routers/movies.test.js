@@ -49,6 +49,18 @@ const testMovies = [
     posterUrl:
       "https://images-na.ssl-images-amazon.com/images/M/MV5BMjA1MTc1NTg5NV5BMl5BanBnXkFtZTgwOTM2MDEzNzE@._V1_SX300.jpg",
   },
+  {
+    title: 25,
+    year: 2019,
+    runtime: 187,
+    genres: ["Crime", "Drama", "Mystery"],
+    director: "Quentin Tarantino",
+    actors:
+      "Samuel L. Jackson, Kurt Russell, Jennifer Jason Leigh, Walton Goggins",
+    plot: "In the dead of a Wyoming winter, a bounty hunter and his prisoner find shelter in a cabin currently inhabited by a collection of nefarious characters.",
+    posterUrl:
+      "https://images-na.ssl-images-amazon.com/images/M/MV5BMjA1MTc1NTg5NV5BMl5BanBnXkFtZTgwOTM2MDEzNzE@._V1_SX300.jpg",
+  },
 ];
 
 afterAll(async () => {
@@ -90,6 +102,15 @@ describe("Test movies router endpoints", () => {
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(
       `Error: You have crossed characters limit! Limit: 255 Property: title`
+    );
+  });
+
+  test("Should respond with code 400 and number error message", async () => {
+    const response = await request(app).post("/movies/add").send(testMovies[4]);
+    await expect(response.statusCode).toBe(400);
+    await expect(response.body.message).toBe(
+      `Error: Property title should be a string but received: ${typeof testMovies[4]
+        .title}`
     );
   });
 });
