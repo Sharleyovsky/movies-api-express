@@ -41,7 +41,7 @@ const movie = async (req, res, next) => {
 
     if (movie.title.length > CHARACTERS_LIMIT) {
       throw new Error(
-        `You have crossed characters limit! Limit: ${CHARACTERS_LIMIT} Property: director`
+        `You have crossed characters limit! Limit: ${CHARACTERS_LIMIT} Property: title`
       );
     }
 
