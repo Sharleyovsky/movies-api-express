@@ -1,5 +1,5 @@
 const { readFile } = require("fs").promises;
-const { dbPath } = require("../../../config/config");
+const { dbPath } = require("../config/config");
 const lodash = require("lodash");
 
 const readDbFile = async () => {

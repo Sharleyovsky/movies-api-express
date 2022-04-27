@@ -1,5 +1,5 @@
 const express = require("express");
-const getMovies = require("../data/db/utils/getMovies");
+const getMovies = require("../utils/getMovies");
 
 const moviesRouter = new express.Router();
 const prefix = "/movies";
