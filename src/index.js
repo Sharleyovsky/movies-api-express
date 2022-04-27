@@ -9,8 +9,8 @@ app.use(express.json());
 app.use(healthRouter);
 app.use(moviesRouter);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
 
-module.exports = app;
+module.exports = { app, server };
