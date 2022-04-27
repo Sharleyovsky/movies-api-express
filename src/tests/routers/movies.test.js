@@ -55,4 +55,12 @@ describe("Test movies router endpoints", () => {
     });
     await removeMovie(movie.title);
   });
+
+  test("Should respond with code 400 and duplicate error message", async () => {
+    const response = await request(app).post("/movies/add").send(testMovies[2]);
+    await expect(response.statusCode).toBe(400);
+    await expect(response.body.message).toBe(
+      `Error: Movie ${testMovies[2].title} already exists in the database`
+    );
+  });
 });
