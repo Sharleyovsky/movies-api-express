@@ -16,7 +16,7 @@ const testMovies = [
       "http://ia.media-imdb.com/images/M/MV5BMTYzMzU4NDUwOF5BMl5BanBnXkFtZTcwMTM5MjA5Ng@@._V1_SX300.jpg",
   },
   {
-    title: "The Big Short 2",
+    title: "a".repeat(260),
     year: 2017,
     runtime: 136,
     genres: ["Biography", "Comedy", "Drama"],
@@ -51,8 +51,9 @@ const testMovies = [
   },
 ];
 
-afterAll(() => {
-  server.close();
+afterAll(async () => {
+  await server.close();
+  await removeMovie(testMovies[0].title);
 });
 
 describe("Test movies router endpoints", () => {
@@ -65,7 +66,6 @@ describe("Test movies router endpoints", () => {
       ...testMovies[0],
       id: (await getAllMovies()).length,
     });
-    await removeMovie(movie.title);
   });
 
   test("Should respond with code 400 and duplicate error message", async () => {
@@ -82,6 +82,14 @@ describe("Test movies router endpoints", () => {
     await expect(response.body.message).toBe(
       `Error: Property year should be a number but received: ${typeof testMovies[3]
         .year}`
+    );
+  });
+
+  test("Should respond with code 400 and limit error message", async () => {
+    const response = await request(app).post("/movies/add").send(testMovies[1]);
+    await expect(response.statusCode).toBe(400);
+    await expect(response.body.message).toBe(
+      `Error: You have crossed characters limit! Limit: 255 Property: title`
     );
   });
 });
