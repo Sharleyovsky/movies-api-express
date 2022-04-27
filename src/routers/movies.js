@@ -1,6 +1,7 @@
 const express = require("express");
 const getMovies = require("../utils/getMovies");
 const movie = require("../middlewares/movie");
+const addMovie = require("../utils/addMovie");
 
 const moviesRouter = new express.Router();
 const prefix = "/movies";
@@ -17,6 +18,7 @@ moviesRouter.get(prefix, async (req, res) => {
 moviesRouter.post(`${prefix}/add`, movie, async (req, res) => {
   try {
     const movie = res.movie;
+    await addMovie(movie);
 
     res.status(201).send({
       message: `Movie ${res.movie.title} was added to the database!`,
