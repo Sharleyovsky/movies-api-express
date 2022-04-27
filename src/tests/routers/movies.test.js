@@ -2,98 +2,9 @@ const request = require("supertest");
 const { app, server } = require("../../index");
 const getAllMovies = require("../../utils/getAllMovies");
 const removeMovie = require("../../utils/removeMovie");
+const testMovies = require("../dummyData/testMovies");
 
-const testMovies = [
-  {
-    title: "A Separation 2",
-    year: 2013,
-    runtime: 125,
-    genres: ["Drama", "Mystery"],
-    director: "Asghar Farhadi",
-    actors: "Peyman Moaadi, Leila Hatami, Sareh Bayat, Shahab Hosseini",
-    plot: "A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer's disease.",
-    posterUrl:
-      "http://ia.media-imdb.com/images/M/MV5BMTYzMzU4NDUwOF5BMl5BanBnXkFtZTcwMTM5MjA5Ng@@._V1_SX300.jpg",
-  },
-  {
-    title: "a".repeat(260),
-    year: 2017,
-    runtime: 136,
-    genres: ["Biography", "Comedy", "Drama"],
-    director: "Adam McKay",
-    actors: "Ryan Gosling, Rudy Eisenzopf, Casey Groves, Charlie Talbert",
-    plot: "Four denizens in the world of high-finance predict the credit and housing bubble collapse of the mid-2000s, and decide to take on the big banks for their greed and lack of foresight.",
-    posterUrl:
-      "https://images-na.ssl-images-amazon.com/images/M/MV5BNDc4MThhN2EtZjMzNC00ZDJmLThiZTgtNThlY2UxZWMzNjdkXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg",
-  },
-  {
-    title: "Beetlejuice",
-    year: 1988,
-    runtime: 92,
-    genres: ["Comedy", "Fantasy"],
-    director: "Tim Burton",
-    actors: "Alec Baldwin, Geena Davis, Annie McEnroe, Maurice Page",
-    plot: 'A couple of recently deceased ghosts contract the services of a "bio-exorcist" in order to remove the obnoxious new owners of their house.',
-    posterUrl:
-      "https://images-na.ssl-images-amazon.com/images/M/MV5BMTUwODE3MDE0MV5BMl5BanBnXkFtZTgwNTk1MjI4MzE@._V1_SX300.jpg",
-  },
-  {
-    title: "The Hateful Eight 2",
-    year: "2015",
-    runtime: 187,
-    genres: ["Crime", "Drama", "Mystery"],
-    director: "Quentin Tarantino",
-    actors:
-      "Samuel L. Jackson, Kurt Russell, Jennifer Jason Leigh, Walton Goggins",
-    plot: "In the dead of a Wyoming winter, a bounty hunter and his prisoner find shelter in a cabin currently inhabited by a collection of nefarious characters.",
-    posterUrl:
-      "https://images-na.ssl-images-amazon.com/images/M/MV5BMjA1MTc1NTg5NV5BMl5BanBnXkFtZTgwOTM2MDEzNzE@._V1_SX300.jpg",
-  },
-  {
-    title: 25,
-    year: 2019,
-    runtime: 187,
-    genres: ["Crime", "Drama", "Mystery"],
-    director: "Quentin Tarantino",
-    actors:
-      "Samuel L. Jackson, Kurt Russell, Jennifer Jason Leigh, Walton Goggins",
-    plot: "In the dead of a Wyoming winter, a bounty hunter and his prisoner find shelter in a cabin currently inhabited by a collection of nefarious characters.",
-    posterUrl:
-      "https://images-na.ssl-images-amazon.com/images/M/MV5BMjA1MTc1NTg5NV5BMl5BanBnXkFtZTgwOTM2MDEzNzE@._V1_SX300.jpg",
-  },
-  {
-    title: "A Separation 3",
-    year: 2018,
-    runtime: 145,
-    genres: ["Drama", "Mystery", "Anime"],
-    director: "Asghar Farhadi",
-    actors: "Peyman Moaadi, Leila Hatami, Sareh Bayat, Shahab Hosseini",
-    plot: "A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer's disease.",
-    posterUrl:
-      "http://ia.media-imdb.com/images/M/MV5BMTYzMzU4NDUwOF5BMl5BanBnXkFtZTcwMTM5MjA5Ng@@._V1_SX300.jpg",
-  },
-  {
-    title: "A Separation 4",
-    year: 2019,
-    runtime: 145,
-    director: "Asghar Farhadi",
-    actors: "Peyman Moaadi, Leila Hatami, Sareh Bayat, Shahab Hosseini",
-    plot: "A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer's disease.",
-    posterUrl:
-      "http://ia.media-imdb.com/images/M/MV5BMTYzMzU4NDUwOF5BMl5BanBnXkFtZTcwMTM5MjA5Ng@@._V1_SX300.jpg",
-  },
-  {
-    titlee: "A Separation 5",
-    year: 2020,
-    runtime: 135,
-    genres: ["Drama", "Mystery"],
-    director: "Asghar Farhadi",
-    actors: "Peyman Moaadi, Leila Hatami, Sareh Bayat, Shahab Hosseini",
-    plot: "A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer's disease.",
-    posterUrl:
-      "http://ia.media-imdb.com/images/M/MV5BMTYzMzU4NDUwOF5BMl5BanBnXkFtZTcwMTM5MjA5Ng@@._V1_SX300.jpg",
-  },
-];
+const prefix = "/movies";
 
 afterAll(async () => {
   await server.close();
@@ -102,13 +13,15 @@ afterAll(async () => {
 
 describe("Test movies router endpoints", () => {
   test("Should respond with code 200 and random movie", async () => {
-    const response = await request(app).get("/movies");
+    const response = await request(app).get(prefix);
     await expect(response.statusCode).toBe(200);
     await expect(response.body.length).toBe(1);
   });
 
   test("Should respond with code 201 and add movie to the database", async () => {
-    const response = await request(app).post("/movies/add").send(testMovies[0]);
+    const response = await request(app)
+      .post(`${prefix}/add`)
+      .send(testMovies[0]);
     const movie = response.body.movie;
 
     await expect(response.statusCode).toBe(201);
@@ -119,7 +32,9 @@ describe("Test movies router endpoints", () => {
   });
 
   test("Should respond with code 400 and duplicate error message", async () => {
-    const response = await request(app).post("/movies/add").send(testMovies[2]);
+    const response = await request(app)
+      .post(`${prefix}/add`)
+      .send(testMovies[2]);
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(
       `Error: Movie ${testMovies[2].title} already exists in the database`
@@ -127,7 +42,9 @@ describe("Test movies router endpoints", () => {
   });
 
   test("Should respond with code 400 and string error message", async () => {
-    const response = await request(app).post("/movies/add").send(testMovies[3]);
+    const response = await request(app)
+      .post(`${prefix}/add`)
+      .send(testMovies[3]);
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(
       `Error: Property year should be a number but received: ${typeof testMovies[3]
@@ -136,7 +53,9 @@ describe("Test movies router endpoints", () => {
   });
 
   test("Should respond with code 400 and limit error message", async () => {
-    const response = await request(app).post("/movies/add").send(testMovies[1]);
+    const response = await request(app)
+      .post(`${prefix}/add`)
+      .send(testMovies[1]);
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(
       `Error: You have crossed characters limit! Limit: 255 Property: title`
@@ -144,7 +63,9 @@ describe("Test movies router endpoints", () => {
   });
 
   test("Should respond with code 400 and number error message", async () => {
-    const response = await request(app).post("/movies/add").send(testMovies[4]);
+    const response = await request(app)
+      .post(`${prefix}/add`)
+      .send(testMovies[4]);
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(
       `Error: Property title should be a string but received: ${typeof testMovies[4]
@@ -153,19 +74,25 @@ describe("Test movies router endpoints", () => {
   });
 
   test("Should respond with code 400 and genres error message", async () => {
-    const response = await request(app).post("/movies/add").send(testMovies[5]);
+    const response = await request(app)
+      .post(`${prefix}/add`)
+      .send(testMovies[5]);
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(`Error: Invalid genres!`);
   });
 
   test("Should respond with code 400 and required keys error message", async () => {
-    const response = await request(app).post("/movies/add").send(testMovies[6]);
+    const response = await request(app)
+      .post(`${prefix}/add`)
+      .send(testMovies[6]);
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(`Error: Missing required keys!`);
   });
 
   test("Should respond with code 400 and invalid keys error message", async () => {
-    const response = await request(app).post("/movies/add").send(testMovies[7]);
+    const response = await request(app)
+      .post(`${prefix}/add`)
+      .send(testMovies[7]);
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(`Error: Invalid keys!`);
   });
