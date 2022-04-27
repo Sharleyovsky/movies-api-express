@@ -61,6 +61,17 @@ const testMovies = [
     posterUrl:
       "https://images-na.ssl-images-amazon.com/images/M/MV5BMjA1MTc1NTg5NV5BMl5BanBnXkFtZTgwOTM2MDEzNzE@._V1_SX300.jpg",
   },
+  {
+    title: "A Separation 3",
+    year: 2018,
+    runtime: 145,
+    genres: ["Drama", "Mystery", "Anime"],
+    director: "Asghar Farhadi",
+    actors: "Peyman Moaadi, Leila Hatami, Sareh Bayat, Shahab Hosseini",
+    plot: "A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer's disease.",
+    posterUrl:
+      "http://ia.media-imdb.com/images/M/MV5BMTYzMzU4NDUwOF5BMl5BanBnXkFtZTcwMTM5MjA5Ng@@._V1_SX300.jpg",
+  },
 ];
 
 afterAll(async () => {
@@ -112,5 +123,11 @@ describe("Test movies router endpoints", () => {
       `Error: Property title should be a string but received: ${typeof testMovies[4]
         .title}`
     );
+  });
+
+  test("Should respond with code 400 and genres error message", async () => {
+    const response = await request(app).post("/movies/add").send(testMovies[5]);
+    await expect(response.statusCode).toBe(400);
+    await expect(response.body.message).toBe(`Error: Invalid genres!`);
   });
 });
