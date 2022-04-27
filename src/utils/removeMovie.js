@@ -11,7 +11,7 @@ const removeMovie = async (title) => {
       throw new Error("Movie doesn't exist in the database!");
     }
 
-    movie.splice(db.movies.indexOf(movie), 1);
+    db.movies.splice(db.movies.indexOf(movie), 1);
     await writeFile(dbPath, JSON.stringify(db));
   } catch (error) {
     console.log(error);
