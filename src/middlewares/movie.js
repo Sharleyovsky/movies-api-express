@@ -91,7 +91,7 @@ const movie = async (req, res, next) => {
       throw new Error(`Movie ${movie.title} already exists in the database`);
     }
 
-    movie.id = movies.length;
+    movie.id = movies.length + 1;
     res.movie = movie;
     next();
   } catch (error) {
