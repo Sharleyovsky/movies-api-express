@@ -5,8 +5,8 @@ const readDbFile = require("../helpers/readDbFile");
 const addMovie = async (movie) => {
   try {
     const db = await readDbFile();
-    db.movies.push(movie);
 
+    db.movies.push(movie);
     await writeFile(dbPath, JSON.stringify(db));
   } catch (error) {
     console.log(error.toString());
