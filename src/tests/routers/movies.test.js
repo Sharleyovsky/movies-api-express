@@ -15,7 +15,16 @@ describe("Test movies router endpoints", () => {
   test("Should respond with code 200 and random movie", async () => {
     const response = await request(app).get(prefix);
     await expect(response.statusCode).toBe(200);
-    await expect(response.body.length).toBe(1);
+    await expect(response.body).toHaveLength(1);
+  });
+
+  test("Should respond with code 200 and random movie with right duration", async () => {
+    const duration = 90;
+    const response = await request(app).get(`${prefix}?duration=${duration}`);
+    await expect(response.statusCode).toBe(200);
+    await expect(response.body).toHaveLength(1);
+    await expect(+response.body[0].runtime).toBeGreaterThanOrEqual(80);
+    await expect(+response.body[0].runtime).toBeLessThanOrEqual(100);
   });
 
   test("Should respond with code 201 and add movie to the database", async () => {
