@@ -37,6 +37,18 @@ const testMovies = [
     posterUrl:
       "https://images-na.ssl-images-amazon.com/images/M/MV5BMTUwODE3MDE0MV5BMl5BanBnXkFtZTgwNTk1MjI4MzE@._V1_SX300.jpg",
   },
+  {
+    title: "The Hateful Eight",
+    year: "2015",
+    runtime: 187,
+    genres: ["Crime", "Drama", "Mystery"],
+    director: "Quentin Tarantino",
+    actors:
+      "Samuel L. Jackson, Kurt Russell, Jennifer Jason Leigh, Walton Goggins",
+    plot: "In the dead of a Wyoming winter, a bounty hunter and his prisoner find shelter in a cabin currently inhabited by a collection of nefarious characters.",
+    posterUrl:
+      "https://images-na.ssl-images-amazon.com/images/M/MV5BMjA1MTc1NTg5NV5BMl5BanBnXkFtZTgwOTM2MDEzNzE@._V1_SX300.jpg",
+  },
 ];
 
 afterAll(() => {
@@ -61,6 +73,15 @@ describe("Test movies router endpoints", () => {
     await expect(response.statusCode).toBe(400);
     await expect(response.body.message).toBe(
       `Error: Movie ${testMovies[2].title} already exists in the database`
+    );
+  });
+
+  test("Should respond with code 400 and string error message", async () => {
+    const response = await request(app).post("/movies/add").send(testMovies[3]);
+    await expect(response.statusCode).toBe(400);
+    await expect(response.body.message).toBe(
+      `Error: Property year should be a number but received: ${typeof testMovies[3]
+        .year}`
     );
   });
 });
