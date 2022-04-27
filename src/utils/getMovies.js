@@ -33,7 +33,7 @@ const getMovies = async (queries = null) => {
 
     return movies;
   } catch (error) {
-    return error;
+    console.log(error.toString());
   }
 };
 
