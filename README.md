@@ -7,7 +7,7 @@
 ```bash
 git clone https://github.com/Sharleyovsky/movies-api-express.git
 ```
-2. Enter the project's directory in a terminal choose the way you want to start the app and enter the commands provided below.
+2. Enter the project's directory in a terminal, choose the way you want to start the app and enter the commands provided below.
 
 #### Running app locally
 1. ``npm i``
