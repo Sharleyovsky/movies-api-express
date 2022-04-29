@@ -1,6 +1,7 @@
 ### Prerequisites
 1. Node.js
-2. Docker (optional)
+2. npm
+3. Docker (optional)
 
 ### Installation
 1. Start by cloning this repo.
