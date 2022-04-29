@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install --silent
+RUN npm i --silent
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
