@@ -3,6 +3,7 @@ const lodash = require("lodash");
 const filterMoviesByDuration = require("../helpers/filterMoviesByDuration");
 const filterMoviesByGenres = require("../helpers/filterMoviesByGenres");
 const getRandomMovie = require("../helpers/getRandomMovie");
+const removeDuplicates = require("../helpers/removeDuplicates");
 
 const getMovies = async (queries = null) => {
   try {
@@ -11,6 +12,8 @@ const getMovies = async (queries = null) => {
     if (lodash.isEmpty(movies)) {
       return [];
     }
+
+    movies = removeDuplicates(movies);
 
     if (lodash.isEqual(queries, {}) || !queries) {
       return getRandomMovie(movies);
