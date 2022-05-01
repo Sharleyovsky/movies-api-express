@@ -1,9 +1,9 @@
-const readDbFile = require("../helpers/readDbFile");
+const readDbFile = require("./readDbFile");
 const lodash = require("lodash");
-const filterMoviesByDuration = require("../helpers/filterMoviesByDuration");
-const filterMoviesByGenres = require("../helpers/filterMoviesByGenres");
-const getRandomMovie = require("../helpers/getRandomMovie");
-const removeDuplicates = require("../helpers/removeDuplicates");
+const filterMoviesByDuration = require("./filterMoviesByDuration");
+const filterMoviesByGenres = require("./filterMoviesByGenres");
+const getRandomMovie = require("./getRandomMovie");
+const removeDuplicates = require("./removeDuplicates");
 
 const getMovies = async (queries = null) => {
   try {

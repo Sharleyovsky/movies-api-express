@@ -1,5 +1,5 @@
 const getGenres = require("../utils/getGenres");
-const isValid = require("../helpers/isValid");
+const isValid = require("../utils/isValid");
 const getAllMovies = require("../utils/getAllMovies");
 
 const movie = async (req, res, next) => {

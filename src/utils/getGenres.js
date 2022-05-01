@@ -1,4 +1,4 @@
-const readDbFile = require("../helpers/readDbFile");
+const readDbFile = require("./readDbFile");
 
 const getGenres = async () => {
   const { genres } = await readDbFile();

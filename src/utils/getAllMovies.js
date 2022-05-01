@@ -1,4 +1,4 @@
-const readDbFile = require("../helpers/readDbFile");
+const readDbFile = require("./readDbFile");
 
 const getAllMovies = async () => {
   const { movies } = await readDbFile();

@@ -1,6 +1,6 @@
 const { writeFile } = require("fs").promises;
 const { dbPath } = require("../config/config");
-const readDbFile = require("../helpers/readDbFile");
+const readDbFile = require("./readDbFile");
 
 const removeMovie = async (title) => {
   try {
